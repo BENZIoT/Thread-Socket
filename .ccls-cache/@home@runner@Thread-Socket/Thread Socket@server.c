@@ -101,8 +101,8 @@ void *connection_handler(void *socket_desc) {
   close(sock);
 
   if (n == 0) {
-    puts("Client Disconnected");
-    --countTheads;
+    printf("\nClient[%d] Disconnected!!!\n", numOfTheads[sock]);
+    // --countTheads;
   } else {
     perror("recv failed");
   }

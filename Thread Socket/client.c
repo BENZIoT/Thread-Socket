@@ -47,31 +47,35 @@ int main() {
 
   printf("[%d] Enter message: ", numOfTheads);
   while (fgets(sbuff, MAX_SIZE, stdin) != NULL) {
-    
+
     send(sock_desc, sbuff, strlen(sbuff), 0);
     remove_newline(sbuff);
-    printf("[%d] send: \"%s\" (%ld bytes)\n", numOfTheads, sbuff, strlen(sbuff));
-    
+    printf("[%d] send: \"%s\" (%ld bytes)\n", numOfTheads, sbuff,
+           strlen(sbuff));
 
     if (recv(sock_desc, rbuff, MAX_SIZE, 0) == 0)
       printf("Error");
-    else
-    {
+    else {
       remove_newline(sbuff);
       // fputs(rbuff, stdout);
-      printf("[%d] recv: \"%s\" (%ld bytes)\n", numOfTheads, sbuff, strlen(sbuff));
+      printf("[%d] recv: \"%s\" (%ld bytes)\n", numOfTheads, sbuff,
+             strlen(sbuff));
     }
     printf("\n[%d] Enter message: ", numOfTheads);
 
     bzero(rbuff, MAX_SIZE);
+
+    if (!strcmp(sbuff, "exit")) {
+      break;
+    }
   }
   close(sock_desc);
   return 0;
 }
 
 void remove_newline(char *str) {
-    int len = strlen(str);
-    if (len > 0 && str[len - 1] == '\n') {
-        str[len - 1] = '\0';
-    }
+  int len = strlen(str);
+  if (len > 0 && str[len - 1] == '\n') {
+    str[len - 1] = '\0';
+  }
 }
